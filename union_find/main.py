@@ -40,12 +40,13 @@ class OptimisedGraphUnionFind:
     def find(self, q, p):
         return self.find_value_root(q) == self.find_value_root(p)
     def union(self, q, p):
+        val1 = self.find_value_root(q)
+        val2 = self.find_value_root(p)
         if(q ==p):
             return 
-        
-        if(self.tree_count[q] > self.tree_count[p]):
+        if(self.tree_count[val1] > self.tree_count[val2]):
 
-            self.tree_count[p] +=1
+            self.tree_count[val2] +=self.tree_count[val1]
             self.array[p] = q
         else:
             self.tree_count[q] +=1
