@@ -1,0 +1,2 @@
+class UnorderedPriorityQueue:
+    pass
