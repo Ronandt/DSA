@@ -35,6 +35,7 @@ class OptimisedGraphUnionFind:
     def find_value_root(self,a):
         current_val = a
         while(self.array[current_val] != current_val):
+            self.array[current_val] = self.array[self.array[current_val]] #path compression
             current_val = self.array[current_val] 
         return current_val
     def find(self, q, p):
@@ -42,15 +43,15 @@ class OptimisedGraphUnionFind:
     def union(self, q, p):
         val1 = self.find_value_root(q)
         val2 = self.find_value_root(p)
-        if(q ==p):
+        if(val1 ==val2):
             return 
         if(self.tree_count[val1] > self.tree_count[val2]):
 
-            self.tree_count[val2] +=self.tree_count[val1]
-            self.array[p] = q
+            self.tree_count[val1] +=self.tree_count[val2]
+            self.array[val2] = val1
         else:
-            self.tree_count[q] +=1
-            self.array[q] =p
+            self.tree_count[val2] +=self.tree_count[val1]
+            self.array[val1] =self.array[val2]
 
             
 #[1,2,3,4,5]
