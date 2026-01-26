@@ -14,7 +14,7 @@ class MergeSort:
             output.append(min_num)
         output.extend(left)
         output.extend(right)
-        return 
+        return output
     
 
 """

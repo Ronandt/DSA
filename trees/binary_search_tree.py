@@ -8,7 +8,7 @@ class TreeNode:
         self.right = None
 
 
-class BinaryTree:
+class BinarySearchTree:
     def __init__(self) -> None:
         self.root = None
 
@@ -18,18 +18,17 @@ class BinaryTree:
         else:
             self.insert_node(self.root, data)
 
-    def insert_node(self, node: TreeNode | None, data: Any) -> TreeNode:
-        if not node: #base case
-            return TreeNode(data)
-
-        if not node.left:
-            node.left = TreeNode(data)
-        elif not node.right:
-            node.right = TreeNode(data)
+    def insert_node(self, node: TreeNode | None, data: Any) -> None:
+        if data < node.data:
+            if not node.left:
+                node.left = TreeNode(data)
+            else:
+                self.insert_node(node.left, data)
         else:
-            node.left = self.insert_node(node.left, data)
-
-        return node
+            if not node.right:
+                node.right = TreeNode(data)
+            else:
+                self.insert_node(node.right, data)
 
     def __repr__(self) -> str:
         return 'Empty tree' if not self.root else self._print_tree(self.root, '', True)
@@ -44,19 +43,3 @@ class BinaryTree:
         result += self._print_tree(node.left, prefix + ('    ' if is_left else '│   '), True)
 
         return result
-    
-    """
-    
-    First Call: insert_node(Node(10), 5)
-node is not None (it's the 10 node).
-The code sees 5 < 10, so it decides to go Left.
-It calls itself: node.left = self.insert_node(node.left, 5)
-Second Call (The "None" moment):
-Inside the 10 node, node.left is currently None.
-So the function is called as: insert_node(None, 5).
-NOW you hit the if not node case.
-It creates TreeNode(5) and returns it.
-The Connection:
-The first call (at node 10) was waiting for that return value.
-It receives the new Node(5) and sets node.left = Node(5).
-"""
